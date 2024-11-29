@@ -1,3 +1,4 @@
+import time
 import yaml
 import configparser
 import sqlite3
@@ -91,7 +92,8 @@ class F2bCollector(object):
                 if len(entry) < len(self.extra_labels) + 1:
                     continue
                 values = [jail.name, entry['ip']] + [ entry[x] for x in self.extra_labels ]
-                gauge.add_metric(values, 1)
+                timestamp = int(round(time.time() * 1000))
+                gauge.add_metric(values, timestamp)
 
         return gauge
 
