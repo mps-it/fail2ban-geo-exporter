@@ -4,6 +4,9 @@
 # Config
 conf.yml
 
+# Testing files
+fail2ban.sqlite3
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
