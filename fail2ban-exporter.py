@@ -61,7 +61,12 @@ class F2bCollector(object):
             self.jails.append(jail)
 
         for jail in self.jails:
-            rows = cur.execute('SELECT ip FROM bans WHERE DATETIME(timeofban + ?, \'unixepoch\') > DATETIME(\'now\') AND jail = ?', [jail.bantime, jail.name]).fetchall()
+            rows = cur.execute(
+                    'SELECT ip '
+                        'FROM bans '
+                        'WHERE DATETIME(timeofban + ?, \'unixepoch\') > DATETIME(\'now\') AND jail = ?',
+                    [jail.bantime, jail.name]
+                ).fetchall()
             for row in rows:
                 jail.ip_list.append({'ip':row[0]})
 
@@ -84,7 +89,11 @@ class F2bCollector(object):
 
     def expose_single(self):
         metric_labels = ['jail','ip'] + self.extra_labels
-        gauge = GaugeMetricFamily('fail2ban_banned_ip', 'IP banned by fail2ban', labels=metric_labels)
+        gauge = GaugeMetricFamily(
+                'fail2ban_banned_ip',
+                'IP banned by fail2ban',
+                labels=metric_labels
+            )
 
         for jail in self.jails:
             for entry in jail.ip_list:
@@ -98,7 +107,11 @@ class F2bCollector(object):
         return gauge
 
     def expose_grouped(self):
-        gauge = GaugeMetricFamily('fail2ban_location', 'Number of currently banned IPs from this location', labels=self.extra_labels)
+        gauge = GaugeMetricFamily(
+                'fail2ban_location',
+                'Number of currently banned IPs from this location',
+                labels=self.extra_labels
+            )
         grouped = defaultdict(int)
 
         for jail in self.jails:
@@ -114,7 +127,11 @@ class F2bCollector(object):
         return gauge
 
     def expose_jail_summary(self):
-        gauge = GaugeMetricFamily('fail2ban_jailed_ips', 'Number of currently banned IPs per jail', labels=['jail'])
+        gauge = GaugeMetricFamily(
+                'fail2ban_jailed_ips',
+                'Number of currently banned IPs per jail',
+                labels=['jail']
+            )
 
         for jail in self.jails:
             gauge.add_metric([jail.name], len(jail.ip_list))
