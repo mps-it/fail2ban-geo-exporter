@@ -1,4 +1,4 @@
-certifi==2025.7.14
+certifi==2025.8.3
 chardet==5.2.0
 configparser==7.2.0
 geoip2==5.1.0
