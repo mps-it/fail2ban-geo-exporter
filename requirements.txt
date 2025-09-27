@@ -5,6 +5,6 @@ geoip2==5.1.0
 idna==3.10
 maxminddb==2.8.2
 prometheus-client==0.23.1
-PyYAML==6.0.2
+PyYAML==6.0.3
 requests==2.32.5
 urllib3==2.5.0
