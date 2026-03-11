@@ -1,5 +1,5 @@
 certifi==2026.2.25
-chardet==7.0.1
+chardet==7.1.0
 configparser==7.2.0
 geoip2==5.2.0
 idna==3.11
